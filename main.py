@@ -1,17 +1,48 @@
-import sys
-from PyQt6 import QtWidgets, uic
+from PyQt6.QtWidgets import QApplication, QMainWindow
+import MainWindow
 
-from MainWindow import Ui_Dialog
+import random
+import os
 
+ui = MainWindow.Ui_Dialog()
+app = QApplication([])
+win = QMainWindow()
+ui.setupUi(win)
 
-class MainWindow(QtWidgets.QMainWindow, Ui_Dialog):
-    def __init__(self, *args, obj=None, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
-        self.setupUi(self)
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+password = ""
 
+#ui elements
+def generate():
+    global letters
+    global numbers
+    global symbols
+    global password
+    
+    print("Generating Password")
+    l = ui.length.value()
+    u = ui.doUpperCase.isChecked()
+    n = ui.doNumbers.isChecked()
+    s = ui.doSymbols.isChecked()
 
-app = QtWidgets.QApplication(sys.argv)
+    choices = []
+    choices.extend(letters)
+    
+    if u == True:
+        choices.extend(letter.upper() for letter in letters)
+    if n == True:
+        choices.extend(numbers)
+    if s == True:
+        choices.extend(symbols)
+    
+    print(choices)
+    password = ''.join(random.choice(choices) for _ in range(l))
+    print(password)
+    ui.plainTextEdit.setPlainText(password)
+    
+ui.generate.clicked.connect(lambda:generate())
 
-window = MainWindow()
-window.show()
+win.show()
 app.exec()

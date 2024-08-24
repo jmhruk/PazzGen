@@ -1,12 +1,14 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import  QSize
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(190, 360)
+        Dialog.setFixedSize(QSize(190,360))
         self.title_label = QtWidgets.QLabel(parent=Dialog)
         self.title_label.setEnabled(True)
         self.title_label.setGeometry(QtCore.QRect(20, 10, 140, 51))
@@ -21,7 +23,7 @@ class Ui_Dialog(object):
         self.length = QtWidgets.QSlider(parent=Dialog)
         self.length.setGeometry(QtCore.QRect(20, 51, 160, 31))
         self.length.setMinimum(1)
-        self.length.setMaximum(10)
+        self.length.setMaximum(20)
         self.length.setPageStep(6)
         self.length.setProperty("value", 10)
         self.length.setOrientation(QtCore.Qt.Orientation.Horizontal)
